@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include "head.html" %}
+<body class="p-5 pt-2">
+    <!-- {% include "nav.html" %} -->
+    {% load static %}
+        <div class="d-flex justify-content-between p-2">
+            <h1>{{title}}</h1>
+            <a href={% url 'create_book' %}>
+                <button class="btn btn-success">Create Book</button>
+            </a>
+        </div>
+        {% if books != None %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Author</th>
+                        <th scope="col"># Pages</th>
+                        <th scope="col">Publication date</th>
+                        <th scope="col">Classification</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for book in books %}
+                        <tr>
+                            <th scope="row">{{book.id}}</th>
+                            <td>{{ book.title }}</td>
+                            <td>{{ book.author }}</td>
+                            <td>{{ book.pages }}</td>
+                            <td>{{ book.publication_date }}</td>
+                            <td>{{ book.get_classification_display }}</td>
+                            <td>
+                                <a href="{% url 'edit_book' book.id %}" class="btn btn-primary">
+                                    Edit
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete_book' book.id %}" class="btn btn-danger">  
+                                    Delete
+                                </a> 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> 
+        {% else %}
+            <div class="col-md-12 text-center">
+                <h1 class="text-success">204</h1>
+                <h2>Books without content</h2>
+                <p>
+                    Sorry, by the moment we dont have book to display
+                </p>
+            </div>
+        {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="position-absolute bottom-0 end-0 m-5 w-25 alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% include "footer.html" %}
+</body>
+</html>

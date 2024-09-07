@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Book(models.Model):
-    title = models.CharField(max_length=254, null=False, blank=False)
+    title = models.CharField(max_length=254, null=False, blank=False, unique=True)
     author = models.CharField(max_length=100, default="Anonymous")
     pages = models.IntegerField()
     publication_date = models.DateField(help_text="Publication Date")

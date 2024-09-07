@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include "head.html" %}
+<body class="p-5 pt-2">
+    <!-- {% include "nav.html" %} -->
+    {% load static %}
+        <div class="d-flex justify-content-between p-2">
+            <h1>{{title}}</h1>
+            <a href={% url 'list_books' %} class="btn btn-primary p-2">Return</a>
+        </div>
+        <form action="{% url "create_book" %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="title" id="title" class="form-control" placeholder="Harry Potter">
+            </div>
+            <div class="mb-3">
+                <label for="author" class="form-label">Author</label>
+                <input type="text" name="author" id="author" class="form-control" placeholder="J. K. Rowling">
+            </div>
+            <div class="mb-3">
+                <label for="pages" class="form-label">Number of pages</label>
+                <input type="number" name="pages" id="pages" min="0" class="form-control" placeholder="300">
+            </div>
+            <div class="mb-3">
+                <label for="publication_date class="form-label">Publication Date</label>
+                <input type="date" name="publication_date" id="publication_date" min="0" class="form-control" placeholder="300">
+            </div>
+            <div class="mb-3">
+                <label for="classification" class="form-label">Classification</label>
+                <input type="number" name="classification" id="classification" min="0" class="form-control" placeholder="0">
+            </div>
+            
+            <!-- <select name="Classification" id="Classification">
+
+            </select> -->
+            <div class="mb-3">
+                <button type="btn btn-success">Create</button>
+            </div>
+        </form>
+        
+    {% include "footer.html" %}
+</body>
+</html>

@@ -44,7 +44,7 @@ def book_list(request):
 
 def create_book(request):
     if(request.method == 'GET'):
-        return render(request, "books/create.html", {'title': "Create Book"})
+        return render(request, "books/form.html", {'title': "Create Book"})
     elif(request.method == 'POST'):
         try:
             book = Book()
@@ -54,18 +54,39 @@ def create_book(request):
             book.publication_date = request.POST.get("publication_date")
             book.save()
             messages.success(request, "Book created!")
-        except:
+        except Exception as e:
+            print(e)
             messages.error(request, "Something way wrong...")
-            
+  
         return redirect("list_books")
-        
+
+def edit_book(request, id):
+    if request.method == "POST":
+        try:
+            book = Book.objects.get(pk = id)
+            book.title = request.POST.get("title")
+            book.author = request.POST.get("author")
+            book.pages = request.POST.get("pages")
+            book.publication_date = request.POST.get("publication_date")
+            book.save()
+            messages.success(request, "Book created!")
+        except Exception as e:
+            print(e)
+            messages.error(request, "Something way wrong...")
+        return redirect('list_books')
+    else:
+        book = Book.objects.get(pk = id)
+        context = {"book": book, "title": "Edit book"}
+        return render(request, "books/form.html", context)
+    
+
 def delete_book(request, id):
     try:
         book = Book.objects.get(pk = id)
         book.delete()
         messages.success(request, "Book deleted!")
-    except:
+    except Exception as e:
+        print(e)
         messages.error(request, "Something way wrong...")
 
     return redirect("list_books")
-

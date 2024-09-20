@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include "head.html" %}
+<body class="p-5 pt-2">
+    <!-- {% include "nav.html" %} -->
+    {% load static %}
+        <div class="d-flex justify-content-between p-2">
+            <h1>{{title}}</h1>
+            <a href={% url 'create_booking' %}>
+                <button class="btn btn-success">Create a Booking</button>
+            </a>
+        </div>
+        {% if bookings %}
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Book</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">End Date</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for booking in bookings %}
+                        <tr>
+                            <th scope="row">{{booking.id}}</th>
+                            <td>{{ booking.username }}</td>
+                            <td>{{ booking.book.title }}</td>
+                            <td>{{ booking.start_date }}</td>
+                            <td>{{ booking.end_date }}</td>
+                            <td>
+                                <a href="{% url 'edit_booking' booking.id %}" class="btn btn-primary">
+                                    Edit
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete_booking' booking.id %}" class="btn btn-danger">  
+                                    Delete
+                                </a> 
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table> 
+        {% else %}
+            <div class="col-md-12 text-center">
+                <h1 class="text-success">204</h1>
+                <h2>Bookings without content</h2>
+                <p>
+                    Sorry, by the moment we dont have book to display
+                </p>
+            </div>
+        {% endif %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="position-absolute bottom-0 end-0 m-5 w-25 alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% include "footer.html" %}
+</body>
+</html>

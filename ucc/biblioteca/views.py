@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib import messages
-from .models import Book
+from .models import Book, Booking
 
 # Create your views here.
 def index(request):
@@ -36,9 +36,6 @@ def sum(request, n1, n2):
 # CRUD books
 def book_list(request):
     context = {'title': 'Books'}
-    """ messages.error(request, "The request it's fine...")
-    messages.warning(request, "The request it's fine...")
-    messages.success(request, "The request it's fine...") """
     context["books"] = Book.objects.all()
     return render(request, "books/index.html", context)
 
@@ -78,7 +75,6 @@ def edit_book(request, id):
         book = Book.objects.get(pk = id)
         context = {"book": book, "title": "Edit book"}
         return render(request, "books/form.html", context)
-    
 
 def delete_book(request, id):
     try:
@@ -90,3 +86,65 @@ def delete_book(request, id):
         messages.error(request, "Something way wrong...")
 
     return redirect("list_books")
+
+# CRUD bookings
+def booking_list(request):
+    context = {'title': 'Bookings'}
+    context["bookings"] = Booking.objects.all()
+    return render(request, "bookings/index.html", context)
+
+def create_booking(request):
+    if(request.method == 'GET'):
+        context = {'title': "Create Booking"}
+        context['books'] = Book.objects.all()
+        return render(request, "bookings/form.html", context)
+    elif(request.method == 'POST'):
+        print(request.POST)
+        username = request.POST.get("username")
+        book_id = request.POST.get("book")
+        start_date = request.POST.get("start_date")
+        end_date = request.POST.get("end_date")
+        try:
+            book = Book.objects.get(pk = book_id)
+            booking = Booking(
+                username = username, 
+                book = book, 
+                start_date = start_date, 
+                end_date = end_date
+            )
+            booking.save()
+            messages.success(request, "Booking created!")
+        except Exception as e:
+            print(e)
+            messages.error(request, "Something way wrong...")
+  
+        return redirect("list_bookings")
+
+def edit_booking(request, id):
+    if request.method == "POST":
+        try:
+            book = Booking.objects.get(pk = id)
+            book.username = request.POST.get("username")
+            book.end_date = request.POST.get("end_date")
+            book.save()
+            messages.success(request, "Booking updated!")
+        except Exception as e:
+            print(e)
+            messages.error(request, "Something way wrong...")
+        return redirect('list_bookings')
+    else:
+        booking = Booking.objects.get(pk = id)
+        books = Book.objects.all()
+        context = {"booking": booking, "books": books, "title": "Edit booking"}
+        return render(request, "bookings/form.html", context)
+
+def delete_booking(request, id):
+    try:
+        booking = Booking.objects.get(pk = id)
+        booking.delete()
+        messages.success(request, "Booking deleted!")
+    except Exception as e:
+        print(e)
+        messages.error(request, "Something way wrong...")
+
+    return redirect("list_bookings")

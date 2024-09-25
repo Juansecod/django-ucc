@@ -2,12 +2,43 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib import messages
-from .models import Book, Booking
+from .models import Book, Booking, User
 
 # Create your views here.
+def signin(request):
+    pass
+
+def login(request):
+    if request.method == 'POST':
+        email = request.POST.get("email")
+        password = request.POST.get("password")
+        try:
+            user = User.objects.get(email=email, password=password)
+            
+            data_user = {
+                "id": user.id,
+                "name": user.full_name,
+                "rol": user.rol
+            }
+
+            request.session["user_logged"] = data_user
+
+            return redirect("index")
+        except User.DoesNotExist:
+            messages.error(request, "Wrong email or password")
+            return redirect("login")
+        except Exception as e:
+            print(e)
+            messages.error(request, "Something way wrong...")
+            return redirect("login")
+    elif request.method == 'GET':
+        return render(request, "auth/login.html", context={'title': 'Login'})
+
+def logout(request):
+    pass
+
 def index(request):
     context = {"title": "Home"}
-    print(Book.objects.all()[1])
     return render(request, "index.html", context)
 
 def sell(request):

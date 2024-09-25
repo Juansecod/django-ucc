@@ -25,3 +25,14 @@ class Booking(models.Model):
     
     def __str__(self) -> str:
         return f"{self.book.title} is booked by {self.username} from {self.start_date} to {self.end_date}"
+
+class User(models.Model):
+    email = models.EmailField(max_length = 254, unique = True)
+    full_name = models.CharField(max_length = 254)
+    password = models.CharField(max_length = 254)
+    ROLES = (
+        ('A', 'Admin'),
+        ('L', 'Librarian'),
+        ('S', 'Student')
+    )
+    rol = models.CharField(max_length=1, choices=ROLES, default='E')

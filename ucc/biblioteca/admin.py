@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, Booking
+from .models import Book, Booking, User
 
 # Register your models here.
 class BookAdmin(admin.ModelAdmin):
@@ -15,3 +15,10 @@ class BookingAdmin(admin.ModelAdmin):
     list_filter = ["start_date", "end_date"]
 
 admin.site.register(Booking, BookingAdmin)
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ["id", "full_name", "email", "rol"]
+    search_fields = ["full_name", "email"]
+    list_filter = ["rol"]
+
+admin.site.register(User, UserAdmin)

@@ -7,6 +7,11 @@
     <div>
         <h1>{{title}}</h1>
         <img src="{% static '/img/library_image.png' %}" alt="library" width="20%"/>
+        <p>
+            ID: {{ request.session.user_logged.id }}<br>
+            Nombre: {{ request.session.user_logged.name }}<br>
+            ROL: {{ request.session.user_logged.rol }}<br>
+        </p>
     </div>
     {% include "footer.html" %}
 </body>

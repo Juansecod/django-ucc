@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     {% include "head.html" %}
-<body class="p-5 pt-2">
-    <!-- {% include "nav.html" %} -->
+<body>
+    {% include "nav.html" %}
     {% load static %}
+    <section class="p-5 pt-2">
         <div class="d-flex justify-content-between p-2">
             <h1>{{title}}</h1>
             <a href={% url 'create_book' %}>
@@ -34,14 +35,18 @@
                             <td>{{ book.publication_date }}</td>
                             <td>{{ book.get_classification_display }}</td>
                             <td>
-                                <a href="{% url 'edit_book' book.id %}" class="btn btn-primary">
-                                    Edit
-                                </a>
+                                {% if request.session.user_logged.rol == "A" or request.session.user_logged.rol == "L"%}
+                                    <a href="{% url 'edit_book' book.id %}" class="btn btn-primary">
+                                        Edit
+                                    </a>
+                                {% endif %}
                             </td>
                             <td>
-                                <a href="{% url 'delete_book' book.id %}" class="btn btn-danger">  
-                                    Delete
-                                </a> 
+                                {% if request.session.user_logged.rol == "A" or request.session.user_logged.rol == "L"%}
+                                    <a href="{% url 'delete_book' book.id %}" class="btn btn-danger">  
+                                        Delete
+                                    </a> 
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}
@@ -56,13 +61,14 @@
                 </p>
             </div>
         {% endif %}
-        {% if messages %}
-            {% for message in messages %}
-                <div class="position-absolute bottom-0 end-0 m-5 w-25 alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
-                    {{ message }}
-                </div>
-            {% endfor %}
-        {% endif %}
+    </section>
+    {% if messages %}
+        {% for message in messages %}
+            <div class="position-absolute bottom-0 end-0 m-5 w-25 alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
     {% include "footer.html" %}
 </body>
 </html>

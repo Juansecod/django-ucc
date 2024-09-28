@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
     {% include "head.html" %}
-<body class="p-5 pt-2">
-    <!-- {% include "nav.html" %} -->
+<body>
+    {% include "nav.html" %}
     {% load static %}
+    <section class="p-5 p-2">
         <div class="d-flex justify-content-between align-items-center p-2">
             <h1>{{title}}</h1>
             <a href={% url 'list_bookings' %} class="btn btn-primary h-50">Return</a>
@@ -41,7 +42,7 @@
                 </button>
             </div>
         </form>
-        
+    </section>   
     {% include "footer.html" %}
 </body>
 </html>

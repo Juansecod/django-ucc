@@ -1,11 +1,28 @@
-<header>
-    <nav>
-        <ul>
-            <li><a href="./">Home</a></li>
-            <li><a href="./sell">Sell</a></li>
-            <li><a href="./lend">Lend</a></li>
-            <li><a href={% url "list_books" %}>Books</a></li>
-            <li><a href={% url "list_bookings" %}>Bookings</a></li>
-        </ul>
+<header class="sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary ps-5 pe-5">
+        <a class="navbar-brand" href={% url "index" %}>Library</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
+                <!-- <li class="nav-item active {% if title == 'Sell' %}active{% endif %}">
+                    <a class="nav-link" href="./sell">Sell</a>
+                </li>
+                <li class="nav-item active {% if title == 'Lend' %}active{% endif %}">
+                    <a class="nav-link" href="./lend">Lend</a>
+                </li> -->
+                <li class="nav-item">
+                    <a class="nav-link {% if title == 'Books' %}active{% endif %}" href={% url "list_books" %}>Books</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if title == 'Bookings' %}active{% endif %}" href={% url "list_bookings" %}>Bookings</a>
+                </li>
+            </ul>
+            <div class="navbar-text">
+                Bienvenido <strong>{{request.session.user_logged.name}}</strong>
+                <a class="ms-2" href="{% url 'logout' %}"><button class="btn btn-danger">Logout</button></a>
+            </div>
+        </div>
     </nav>
 </header>

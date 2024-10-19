@@ -20,7 +20,7 @@
                 </li>
             </ul>
             <div class="navbar-text">
-                Bienvenido <strong>{{request.session.user_logged.name}}</strong>
+                Welcome, <strong>{{request.session.user_logged.name}}</strong>
                 <a class="ms-2" href="{% url 'logout' %}"><button class="btn btn-danger">Logout</button></a>
             </div>
         </div>

@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    {% include "head.html" %}
-<body>
-    {% include "nav.html" %}
-    {% load static %}
+{% extends 'index.html' %}
+
+{% block content %}
     <section class="p-5 p-2">
         <div class="d-flex justify-content-between align-items-center p-2">
             <h1>{{title}}</h1>
@@ -44,5 +41,4 @@
         </form>
     </section>   
     {% include "footer.html" %}
-</body>
-</html>
+{% endblock %}

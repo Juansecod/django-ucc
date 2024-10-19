@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-    {% include "head.html" %}
-<body>
-    {% include "nav.html" %}
-    {% load static %}
+{% extends 'index.html' %}
+
+{% block content %}
     <section class="p-5 pt-2">
         <div class="d-flex justify-content-between p-2">
             <h1>{{title}}</h1>
@@ -62,13 +59,4 @@
             </div>
         {% endif %}
     </section>
-    {% if messages %}
-        {% for message in messages %}
-            <div class="position-absolute bottom-0 end-0 m-5 w-25 alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
-                {{ message }}
-            </div>
-        {% endfor %}
-    {% endif %}
-    {% include "footer.html" %}
-</body>
-</html>
+{% endblock %}

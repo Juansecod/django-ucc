@@ -4,10 +4,13 @@
 <body>
     {% include "nav.html" %}
     {% load static %}
-    <section class="p-5 pt-2">
-        <h1>{{title}}</h1>
-        <img src="{% static '/img/library_image.png' %}" alt="library" width="20%"/>
-    </section>
+    {% block content %}
+        <section class="p-5 pt-2 d-flex flex-column justify-content-center align-items-center">
+            <h1>{{title}}</h1>
+            <img src="{% static '/img/library_image.png' %}" alt="library" width="40%"/>
+            <h2>Unlock Knowledge, Ignite Minds: Your Journey Begins at the Library!</h2>
+        </section>
+    {% endblock %}
     {% if messages %}
         {% for message in messages %}
             <div class="position-absolute bottom-0 end-0 m-5 w-25 alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}" role="alert">
